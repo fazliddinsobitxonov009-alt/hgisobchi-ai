@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HISOBCHI AI — Moliyaviy Boshqaruv Platformasi</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="app-layout">
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div class="brand-area">
+        <div class="brand-mark">
+          <i data-lucide="cpu" style="width: 22px; height: 22px;"></i>
+        </div>
+        <div class="brand-titles">
+          <h2>HISOBCHI <span>AI</span></h2>
+          <span class="sub-tag">Fintech Platform</span>
+        </div>
+      </div>
+
+      <nav class="nav-stack">
+        <button class="nav-btn active" data-tab="dashboard">
+          <i data-lucide="layout-dashboard"></i>
+          <span>Bosh sahifa</span>
+        </button>
+        <button class="nav-btn" data-tab="transactions">
+          <i data-lucide="receipt"></i>
+          <span>Operatsiyalar</span>
+        </button>
+        <button class="nav-btn" data-tab="categories">
+          <i data-lucide="layers"></i>
+          <span>Kategoriyalar</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="currency-badge">
+          <i data-lucide="wallet" style="width: 14px; height: 14px;"></i> UZS (So‘m) / Faol
+        </div>
+        <div class="profile-strip">
+          <div class="avatar">TB</div>
+          <div class="user-info">
+            <h4>Tadbirkor Biznes</h4>
+            <p>Premium Rejim</p>
+          </div>
+          <button class="theme-toggle" id="themeToggleBtn" title="Rejimni almashtirish">
+            <i data-lucide="moon"></i>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN WORKSPACE -->
+    <main class="main-workspace">
+      <header class="top-bar">
+        <div class="top-title-group">
+          <button class="mobile-toggle" id="mobileMenuToggle">
+            <i data-lucide="menu"></i>
+          </button>
+          <div>
+            <h1 id="pageTitle">Bosh sahifa (Dashboard)</h1>
+            <p class="subtitle" id="currentDateHeader">Yuklanmoqda...</p>
+          </div>
+        </div>
+        <div class="top-actions">
+          <button class="btn btn-yellow" id="quickAddBtn">
+            <i data-lucide="plus"></i> Yangi yozuv qo‘shish
+          </button>
+        </div>
+      </header>
+
+      <!-- TAB 1: DASHBOARD -->
+      <section id="dashboard" class="tab-view active">
+        <div class="hero-grid">
+          <div class="metric-card yellow-hero">
+            <div class="card-tag">
+              <i data-lucide="wallet"></i> Sof Foyda Balansi
+            </div>
+            <div class="metric-value-huge" id="heroNetBalance">0 UZS</div>
+            <div class="hero-footer-row">
+              <span id="heroProfitMargin">Rentabellik: 0%</span>
+              <span class="status-pill">Ijobiy oqim</span>
+            </div>
+          </div>
+
+          <div class="metric-card blue-slab">
+            <div class="card-tag text-blue">
+              <i data-lucide="trending-up"></i> Oylik Kirim
+            </div>
+            <div class="metric-value" id="monthIncomeVal">0 UZS</div>
+            <p class="slab-desc">Tushumlar ko‘rsatkichi</p>
+          </div>
+
+          <div class="metric-card red-slab">
+            <div class="card-tag text-red">
+              <i data-lucide="trending-down"></i> Oylik Chiqim
+            </div>
+            <div class="metric-value" id="monthExpenseVal">0 UZS</div>
+            <p class="slab-desc">Jami xarajatlar</p>
+          </div>
+        </div>
+
+        <div class="block-card">
+          <div class="block-header flex-between">
+            <div>
+              <h3>So‘nggi Tranzaksiyalar</h3>
+              <span class="block-sub">Oxirgi moliyaviy yozuvlar</span>
+            </div>
+            <button class="btn btn-outline btn-sm" id="viewAllTransBtn">Barchasini ko‘rish</button>
+          </div>
+          <div class="table-responsive">
+            <table class="editorial-table">
+              <thead>
+                <tr>
+                  <th>Sana</th>
+                  <th>Operatsiya Nomi</th>
+                  <th>Kategoriya</th>
+                  <th>Turi</th>
+                  <th style="text-align: right;">Summa</th>
+                </tr>
+              </thead>
+              <tbody id="recentTransactionsTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: TRANSACTIONS -->
+      <section id="transactions" class="tab-view">
+        <div class="block-card filter-card">
+          <div class="filter-grid">
+            <div class="form-group">
+              <label>Qidiruv</label>
+              <input type="text" id="searchInput" placeholder="Nomi yoki izoh...">
+            </div>
+            <div class="form-group">
+              <label>Turi</label>
+              <select id="typeFilter">
+                <option value="all">Barchasi</option>
+                <option value="income">Kirim</option>
+                <option value="expense">Chiqim</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Kategoriya</label>
+              <select id="categoryFilter">
+                <option value="all">Barcha kategoriyalar</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Boshlanish sanasi</label>
+              <input type="date" id="startDateFilter">
+            </div>
+            <div class="form-group">
+              <label>Tugash sanasi</label>
+              <input type="date" id="endDateFilter">
+            </div>
+          </div>
+          <div class="filter-actions">
+            <button class="btn btn-outline" id="resetFiltersBtn"><i data-lucide="rotate-ccw"></i> Tozalash</button>
+            <button class="btn btn-outline" id="exportCsvBtn"><i data-lucide="file-spreadsheet"></i> CSV Eksport</button>
+          </div>
+        </div>
+
+        <div class="block-card">
+          <div class="table-responsive">
+            <table class="editorial-table">
+              <thead>
+                <tr>
+                  <th>Sana</th>
+                  <th>Nomi / Izoh</th>
+                  <th>Kategoriya</th>
+                  <th>Turi</th>
+                  <th>Summa</th>
+                  <th style="text-align: right;">Amallar</th>
+                </tr>
+              </thead>
+              <tbody id="allTransactionsTable"></tbody>
+            </table>
+          </div>
+          <div id="emptyState" class="empty-state hidden">
+            <i data-lucide="folder-open" style="width: 36px; height: 36px; color: var(--text-muted);"></i>
+            <p>Hozircha operatsiyalar topilmadi.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: CATEGORIES -->
+      <section id="categories" class="tab-view">
+        <div class="grid-2-col">
+          <div class="block-card">
+            <div class="block-header">
+              <h3>Kategoriya Qo‘shish</h3>
+            </div>
+            <form id="addCategoryForm">
+              <div class="form-group">
+                <label>Kategoriya Nomi</label>
+                <input type="text" id="catNameInput" placeholder="Masalan: Logistika, Reklama" required>
+              </div>
+              <div class="form-group">
+                <label>Operatsiya Turi</label>
+                <select id="catTypeInput" required>
+                  <option value="expense">Chiqim (Xarajat)</option>
+                  <option value="income">Kirim (Daromad)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Ikonka (FontAwesome yoki Lucide klassi)</label>
+                <input type="text" id="catIconInput" value="tag">
+              </div>
+              <button type="submit" class="btn btn-yellow btn-block">Kategoriyani Saqlash</button>
+            </form>
+          </div>
+
+          <div class="block-card">
+            <div class="block-header">
+              <h3>Mavjud Kategoriyalar</h3>
+            </div>
+            <ul class="category-list" id="categoryListContainer"></ul>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- MODAL -->
+  <div class="modal-backdrop hidden" id="transactionModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 id="modalTitle">Yangi Operatsiya</h3>
+        <button class="modal-close" id="closeModalBtn">&times;</button>
+      </div>
+      <form id="transactionForm">
+        <input type="hidden" id="transId">
+        <div class="form-group">
+          <label>Operatsiya Turi</label>
+          <div class="segmented-control">
+            <button type="button" class="seg-btn active" id="segIncome" data-type="income">Kirim</button>
+            <button type="button" class="seg-btn" id="segExpense" data-type="expense">Chiqim</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="transTitle">Nomi / Tavsif</label>
+          <input type="text" id="transTitle" placeholder="Masalan: Mahsulot sotuvi" required>
+        </div>
+        <div class="grid-2-col" style="margin-bottom:0;">
+          <div class="form-group">
+            <label for="transAmount">Summa (UZS)</label>
+            <input type="number" id="transAmount" placeholder="100000" min="1" step="any" required>
+          </div>
+          <div class="form-group">
+            <label for="transCategory">Kategoriya</label>
+            <select id="transCategory" required></select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="transDate">Sana</label>
+          <input type="date" id="transDate" required>
+        </div>
+        <div class="form-group">
+          <label for="transNote">Izoh</label>
+          <textarea id="transNote" rows="2" placeholder="Qo‘shimcha tafsilotlar..."></textarea>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-outline" id="cancelModalBtn">Bekor qilish</button>
+          <button type="submit" class="btn btn-yellow">Saqlash</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast-stack" id="toastStack"></div>
+
+  <script>
+    // Initialize Lucide icons on load
+    document.addEventListener("DOMContentLoaded", () => {
+      lucide.createIcons();
+    });
+  </script>
+  <script src="script.js"></script>
+</body>
+</html>
